@@ -85,7 +85,6 @@ public class TelBook {
         for (int i = 0; i < contacts.length; i++) {
             if (contacts[i] == null){
                 id = i;
-                //break;
             }
         }
 
@@ -99,6 +98,7 @@ public class TelBook {
         for (int i = 0; i < contacts.length; i++) {
             if (contacts[i] == null) {
                 contacts[i] = contact;
+                //break
             }
         }
     }
