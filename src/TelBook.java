@@ -107,15 +107,18 @@ public class TelBook {
 
 
     public void newContact() {
+        String name, surname = "", number = "";
+
         System.out.println("Введите Имя ");
-        String name = scanner.nextLine();
-        while (!name.isBlank()) {
+        name = scanner.nextLine();
+        if (!name.isBlank()) {
             System.out.println("Введите Фамилию ");
-            String surname = scanner.nextLine();
-            while (!surname.isBlank()) {
+            surname = scanner.nextLine();
+            if (!surname.isBlank()) {
                 System.out.println("Введите номер ");
-                String number = scanner.nextLine();
-                while (!surname.isBlank()) {
+                number = scanner.nextLine();
+                if (!number.isBlank()) {
+
 
                     int id = 0;
                     for (int i = 0; i < contacts.length; i++) {
@@ -125,13 +128,16 @@ public class TelBook {
                         }
                     }
 
-                    Contact contact = new Contact(name, surname, number);
-                    addcontact(contact);
-                    break;
-                } break;
-            } break;
-        }
+
+
+                } else System.out.println(" Не корректно введён номер ");
+            } else System.out.println(" Не корректно введена Фамилия");
+            } else System.out.println(" Не корректно введено Имя");
+
+        Contact contact = new Contact(name, surname, number);
+        addcontact(contact);
     }
+
 
     public void addcontact(Contact contact) {
         for (int i = 0; i < contacts.length; i++) {
