@@ -35,8 +35,6 @@ public class Contact {
         this.name = name;
         this.surname = surname;
         this.number = number;
-        boolean n = true;
-
     }
 
 }
