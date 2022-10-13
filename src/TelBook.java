@@ -107,32 +107,39 @@ public class TelBook {
 
 
     public void newContact() {
-        String name, surname = "", number = "";
-
-        System.out.println("Введите Имя ");
-        name = scanner.nextLine();
-        if (!name.isBlank()) {
+        String name = "", surname = "", number = "";
+        boolean n = true;
+        while (n) {
+            System.out.println("Введите Имя ");
+            name = scanner.nextLine();
+            if (name.isBlank()) {
+                continue;
+            } n = false;
+        }
+        n = true;
+        while (n) {
             System.out.println("Введите Фамилию ");
             surname = scanner.nextLine();
-            if (!surname.isBlank()) {
-                System.out.println("Введите номер ");
-                number = scanner.nextLine();
-                if (!number.isBlank()) {
+            if (surname.isBlank()) {
+                continue;
+            } n = false;
+        }
+        n = true;
+        while (n) {
+            System.out.println("Введите номер ");
+            number = scanner.nextLine();
+            if (number.isBlank()) {
+                continue;
+            } n = false;
+        }
+        int id = 0;
+        for (int i = 0; i < contacts.length; i++) {
+            if (contacts[i] == null) {
+                id = i;
+                break;
+            }
+        }
 
-
-                    int id = 0;
-                    for (int i = 0; i < contacts.length; i++) {
-                        if (contacts[i] == null) {
-                            id = i;
-                            break;
-                        }
-                    }
-
-
-
-                } else System.out.println(" Не корректно введён номер ");
-            } else System.out.println(" Не корректно введена Фамилия");
-            } else System.out.println(" Не корректно введено Имя");
 
         Contact contact = new Contact(name, surname, number);
         addcontact(contact);
