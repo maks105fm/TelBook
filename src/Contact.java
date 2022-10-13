@@ -1,17 +1,10 @@
 
 public class Contact {
-    private int id;
+    private static int id = 0;
     private String name;
     private String surname;
     private String number;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -37,8 +30,8 @@ public class Contact {
         this.number = number;
     }
 
-    public Contact(int id, String name, String surname, String number) {
-        this.id = id;
+    public Contact(String name, String surname, String number) {
+        this.id = id + 1;
         this.name = name;
         this.surname = surname;
         this.number = number;

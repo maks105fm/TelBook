@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TelBook {
@@ -11,26 +12,52 @@ public class TelBook {
         System.out.println("2 - Удалить  контакт");
         System.out.println("3 - Редактировать  контакт");
         System.out.println("4 - Список контактовт");
+        System.out.println("5 - Удалить все записи");
 
         String n = scanner.nextLine();
 
         switch (n) {
-            case "1" -> newContact();
-            case "2" -> delcontact();
-            case "3" -> redcontact();
-            case "4" -> spiscontact();
-
+            case "1" -> {
+                newContact();
+                menu();
+            }
+            case "2" -> {
+                delcontact();
+                menu();
+            }
+            case "3" -> {
+                redcontact();
+                menu();
+            }
+            case "4" -> {
+                spiscontact();
+                menu();
+            }
+            case "5" -> {
+                delspiscont();
+                menu();
+            }
+            default -> {
+                System.out.println("Нет такого пункта меню");
+                menu();
+            }
         }
     }
 
-    public void redcontact(){
+    public void delspiscont() {
+        contacts = new Contact[contacts.length];
+        System.out.println("Записи удалены!");
+    }
+
+    public void redcontact() {
         spiscontact();
         System.out.println(" Какой изменить контакт? ");
         int number1 = scanner.nextInt();
-        if(number1 < contacts.length){
-            if (contacts[number1] != null){ //На этом этапе я нашел строку в которой хочу произвести редактирование. Нужно чтобы человек ввел данные и записать в нужную ячейку.
+        scanner.nextLine();
 
-                int id = number1;
+        if ((number1 - 1) < contacts.length) {
+            Contact contact = contacts[number1 - 1];
+            if (contacts[number1 - 1] != null) {
 
                 System.out.println("Введите Имя ");
                 String name = scanner.nextLine();
@@ -40,8 +67,11 @@ public class TelBook {
 
                 System.out.println("Введите номер ");
                 String number = scanner.nextLine();
-                Contact contact = new Contact(id, name, surname, number);
-                addcontact(contact);
+
+                contact.setName(name);
+                contact.setSurname(surname);
+                contact.setNumber(number);
+
 
             }
         }
@@ -50,21 +80,26 @@ public class TelBook {
     public void delcontact() {
         spiscontact();
         System.out.println(" Какой удалить контакт? ");
-        int number = scanner.nextInt();
-        if(number < contacts.length){
-            if (contacts[number] != null) {
-                contacts[number] = null;
-            }
-        }
-        System.out.println("Не корректный индекс");
-        menu();
+        try {
+            int number = scanner.nextInt();
+            scanner.nextLine();
 
+            if (number < contacts.length && contacts[number - 1] != null) {
+                contacts[number - 1] = null;
+                System.out.println("Контакт " + contacts[number - 1].getName() + " удалён");
+            } else System.out.println("Не корректный индекс");
+
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            System.out.println("Вы указали не верный id, попробуйте ещё раз!");
+            delcontact();
+        }
     }
 
     public void spiscontact() {
         for (int i = 0; i < contacts.length; i++) {
             if (contacts[i] != null) {
-                System.out.println(i + " " + contacts[i].getName() + " " + contacts[i].getSurname() + " " + contacts[i].getNumber());
+                System.out.println((i + 1) + " " + contacts[i].getName() + " " + contacts[i].getSurname() + " " + contacts[i].getNumber());
             }
 
         }
@@ -74,25 +109,28 @@ public class TelBook {
     public void newContact() {
         System.out.println("Введите Имя ");
         String name = scanner.nextLine();
+        while (!name.isBlank()) {
+            System.out.println("Введите Фамилию ");
+            String surname = scanner.nextLine();
+            while (!surname.isBlank()) {
+                System.out.println("Введите номер ");
+                String number = scanner.nextLine();
+                while (!surname.isBlank()) {
 
-        System.out.println("Введите Фамилию ");
-        String surname = scanner.nextLine();
+                    int id = 0;
+                    for (int i = 0; i < contacts.length; i++) {
+                        if (contacts[i] == null) {
+                            id = i;
+                            break;
+                        }
+                    }
 
-        System.out.println("Введите номер ");
-        String number = scanner.nextLine();
-
-        int id = 0;
-        for (int i = 0; i < contacts.length; i++) {
-            if (contacts[i] == null){
-                id = i;
-                break;
-            }
+                    Contact contact = new Contact(name, surname, number);
+                    addcontact(contact);
+                    break;
+                } break;
+            } break;
         }
-
-        Contact contact = new Contact(id, name, surname, number);
-        addcontact(contact);
-        System.out.println(contacts[id].getName());
-        menu();
     }
 
     public void addcontact(Contact contact) {
